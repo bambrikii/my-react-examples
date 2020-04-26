@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src:  url('../../fonts/fontawesome-webfont.woff') format('woff');
+  src:  url('../../fonts/fontawesome-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+}
+
+.hello {
+  font-family: 'FontAwesome';
+    color: red;
+}
+
+.span1 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.span2 {
+  font-family: 'FontAwesome';
+}
