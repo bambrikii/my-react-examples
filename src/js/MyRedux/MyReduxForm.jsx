@@ -1,42 +1,61 @@
 import React, {Component} from "react";
 
+import {bindActionCreators} from "redux";
 import { connect } from "react-redux";
-import {Field, reduxForm, reducer as formReducer, formValueSelector} from "redux-form";
+import {Field,
+	reduxForm,
+	reducer as formReducer,
+	formValueSelector,
+	change
+	} from "redux-form";
 
 const validateNotEmpty = value => !value ? 'Must enter a value' : null
 const InputText = ({ input, label, meta: { touched, error }}) => (<div>
     <label htmlFor={input.name}>{label}</label>
     <input {...input} type="text" />
     { touched && error && <span className="error">{error}</span>}
-</div>)
+</div>);
 
-const customRadioField3 = ({ input: {name, value, onChange}, meta, ...custom }) => {
-//  console.log("name: " + JSON.stringify(input));
-  return (<React.Fragment>
-      <div>
-	  <div>
-	      <input type="radio" name={name} value="radio-val1"
-		     onClick={(value) => onChange(value)}
-		     defaultChecked={value === "radio-val1" ? true : false}
-		     />
-	      <label> radio-val1</label>
-	  </div>
-	  <div>
-	      <input type="radio" name={name} value="radio-val2"
-		     onClick={(value) => onChange(value)}
-		     defaultChecked={value === "radio-val2" ? true : false}
-		     />
-	      <label> radio-val2</label>
-	  </div>
-	  <div>
-	      <input type="radio" name={name} value="radio-val3"
-		     onClick={(value) => onChange(value)}
-		     defaultChecked={value === "radio-val3" ? true : false}
-		     />
-	      <label> radio-val3</label>
-	  </div>
-      </div>
-  </React.Fragment>);
+class CustomRadioField3 extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    const name = this.props.input.name;
+    const value = this.props.input.value;
+    const onChange = this.props.input.onChange;
+    const onRadioChange = (event) => {
+      console.log("CustomRadioField3.onChange.event.target.value: " + JSON.stringify(event.target.value));
+    }
+    return (<React.Fragment>
+	<div>
+	    <div>
+		<input type="radio" name={name} value="radio-val1"
+		       onClick={(value) => onChange(value)}
+		       checked={value === "radio-val1" ? true : false}
+		       onChange={onRadioChange}
+		       />
+		<label> radio-val1</label>
+	    </div>
+	    <div>
+		<input type="radio" name={name} value="radio-val2"
+		       onClick={(value) => onChange(value)}
+		       checked={value === "radio-val2" ? true : false}
+		       onChange={onRadioChange}
+		       />
+		<label> radio-val2</label>
+	    </div>
+	    <div>
+		<input type="radio" name={name} value="radio-val3"
+		       onClick={(value) => onChange(value)}
+		       checked={value === "radio-val3" ? true : false}
+		       onChange={onRadioChange}
+		       />
+		<label> radio-val3</label>
+	    </div>
+	</div>
+    </React.Fragment>);
+  }
 }
 
 class MyReduxForm extends Component {
@@ -46,9 +65,6 @@ class MyReduxForm extends Component {
   }
   onCustomField3Change(event) {
     console.log("onCustomField3Change: " + event);
-  }
-  onSubmit(values) {
-    console.log("onSubmit values: " + JSON.stringify(values, null, 1));
   }
   render() {
     return (<React.Fragment>
@@ -71,7 +87,7 @@ class MyReduxForm extends Component {
 		<label>Custom Radio Field3:</label>
 		{JSON.stringify(this.props.customRadioField3)}
 		<Field name="customRadioField3"
-		       component={customRadioField3}
+		       component={CustomRadioField3}
 		       onChange={this.onCustomField3Change}/>
     
 	    </fieldset>
@@ -93,7 +109,7 @@ export const MyReduxFormConnected = reduxForm({
 
 
 const mapStateToProps = state => {
-  console.log("mapStateToProps.state: " + JSON.stringify(state, null, 1));
+  console.log("mapStateToProps.state: " + JSON.stringify(state));
 
   const field1 = selector(state, "field1");
   const customField2 = selector(state, "customField2");
@@ -109,11 +125,16 @@ const selector = formValueSelector('MyReduxForm');
 const mapDispatchToProps = dispatch => {
   return {
     handleFormSubmit: event => {
-      console.log("handleFormSubmit: " + JSON.stringify(event.form, null, 1));
+      console.log("mapDispatchToProps.handleFormSubmit: " + JSON.stringify(event.form));
       event.preventDefault();
-      dispatch({type: 'MY_REDUX_FORM_SUBMIT', payload: event})
+      dispatch({type: 'MY_REDUX_FORM_SUBMIT', payload: event});
+    },
+    handleSelectChange: (value, type) => {
+      console.log("mapDispatchToProps.handleSelectChange: " + value + " " + type);
+      this.props.change(value, type);
     }
-  };
+  }
+  ;
 };
 
 export const MyReduxFormConnectedSelector = connect(

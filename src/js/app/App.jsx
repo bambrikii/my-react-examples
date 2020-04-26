@@ -52,11 +52,13 @@ class App extends Component {
 			    </Tab>
 			    <Tab eventKey="redux-form" title="ReduxForm">
 				<Provider store={myReduxFormStore}>
+				    <h3>Connected Redux Form</h3>
 				    <MyReduxFormConnected onSubmit={(event) => {
 					console.log("App.myReduxFormConnected.onSubmit: values: " + JSON.stringify(event));
 							    }}/>
 	    
 				    <hr/>
+				    <h3>Mapped (with State to Props, Dispatch to Props) Redux Form</h3>
 				    <MyReduxFormConnectedSelector onSubmit={(event) => {
 					console.log("App.myReduxFormConnectedSelector.onSubmit: values: "
 						+ JSON.stringify(event));
