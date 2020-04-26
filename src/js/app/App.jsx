@@ -59,9 +59,9 @@ class App extends Component {
 	    
 				    <hr/>
 				    <h3>Mapped (with State to Props, Dispatch to Props) Redux Form</h3>
-				    <MyReduxFormConnectedSelector onSubmit={(event) => {
+				    <MyReduxFormConnectedSelector onSubmit={(values) => {
 					console.log("App.myReduxFormConnectedSelector.onSubmit: values: "
-						+ JSON.stringify(event));
+						+ JSON.stringify(values));
 								    }}/>
 				</Provider>
 			    </Tab>

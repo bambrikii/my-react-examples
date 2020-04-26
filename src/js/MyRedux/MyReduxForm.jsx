@@ -7,7 +7,7 @@ import {Field,
 	reducer as formReducer,
 	formValueSelector,
 	change
-	} from "redux-form";
+} from "redux-form";
 
 const validateNotEmpty = value => !value ? 'Must enter a value' : null
 const InputText = ({ input, label, meta: { touched, error }}) => (<div>
@@ -58,6 +58,16 @@ class CustomRadioField3 extends Component {
   }
 }
 
+const ValidatedField4 = ({ input, label, type, meta: { touched, error, warning } }) => (
+	  <div>
+	      <label>{label}</label>
+	      <div>
+		  <input {...input} placeholder={label} type={type}/>
+		  {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+	      </div>
+	  </div>
+	  );
+
 class MyReduxForm extends Component {
   constructor(props) {
     super(props);
@@ -67,6 +77,14 @@ class MyReduxForm extends Component {
     console.log("onCustomField3Change: " + event);
   }
   render() {
+    const emailValidator = value =>
+      value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+	      ? 'Invalid email address'
+	      : undefined;
+    const aolValidator = value =>
+      value && /.+@aol\.com/.test(value)
+	      ? 'Really? You still use AOL for your email?'
+	      : undefined
     return (<React.Fragment>
 	<form onSubmit={this.props.handleSubmit}>
 	    <fieldset>
@@ -76,7 +94,8 @@ class MyReduxForm extends Component {
 	    <fieldset>
 		<label className="label">Field1:</label>
 		{JSON.stringify(this.props.field1)}
-		<Field name="field1" component="input" type="text" placeholder="field1"/>
+		<Field name="field1" component="input" type="text" placeholder="field1"
+		       />
 	    </fieldset>
 	    <fieldset>
 		<label className="label">Custom Field2:</label>
@@ -91,7 +110,16 @@ class MyReduxForm extends Component {
 		       onChange={this.onCustomField3Change}/>
     
 	    </fieldset>
-	    <input type="submit" value="Complete"/>
+	    <fieldset>
+		<label className="label">Validated Field4:</label>
+		<Field name="validatedField4"
+		       component={ValidatedField4}
+		       validate={[validateNotEmpty, emailValidator]}
+		       warn={aolValidator}
+		       />
+	    </fieldset>
+	    <button type="submit" disabled={this.props.submitting} >Submit</button>
+	    <button type="button" disabled={this.props.pristine || this.props.submitting} onClick={this.props.reset}>Reset</button>
 	</form>
     </React.Fragment>);
   }
