@@ -2,7 +2,7 @@ import React, { Component }
 from "react";
 import ReactDOM from "react-dom";
 
-import "./App.css";
+import "./App.less";
 
 import Form from "../components/Form.jsx";
 import DataForm from "../components/DataForm.jsx";

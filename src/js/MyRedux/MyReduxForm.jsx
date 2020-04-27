@@ -13,7 +13,7 @@ const validateNotEmpty = value => !value ? 'Must enter a value' : null
 const InputText = ({ input, label, meta: { touched, error }}) => (<div>
     <label htmlFor={input.name}>{label}</label>
     <input {...input} type="text" />
-    { touched && error && <span className="error">{error}</span>}
+    { touched && error && <span className="alert-danger">{error}</span>}
 </div>);
 
 class CustomRadioField3 extends Component {
@@ -21,13 +21,12 @@ class CustomRadioField3 extends Component {
     super(props);
   }
   render() {
-    const name = this.props.input.name;
-    const value = this.props.input.value;
-    const onChange = this.props.input.onChange;
+    const {input: {name, value, onChange}} = this.props;
     const onRadioChange = (event) => {
       console.log("CustomRadioField3.onChange.event.target.value: " + JSON.stringify(event.target.value));
     }
-    return (<React.Fragment>
+    const {meta: {touched, valid, error}} = this.props;
+    return(<React.Fragment>
 	<div>
 	    <div>
 		<input type="radio" name={name} value="radio-val1"
@@ -53,6 +52,9 @@ class CustomRadioField3 extends Component {
 		       />
 		<label> radio-val3</label>
 	    </div>
+	    <div>
+		{!valid && <span className="alert-danger">{error}</span>}
+	    </div>
 	</div>
     </React.Fragment>);
   }
@@ -63,7 +65,8 @@ const ValidatedField4 = ({ input, label, type, meta: { touched, error, warning }
 	      <label>{label}</label>
 	      <div>
 		  <input {...input} placeholder={label} type={type}/>
-		  {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+		  {error && <span className="alert-danger">{error}</span>}
+		  {warning && <span className="alert-warning">{warning}</span>}
 	      </div>
 	  </div>
 	  );
@@ -84,7 +87,7 @@ class MyReduxForm extends Component {
     const aolValidator = value =>
       value && /.+@aol\.com/.test(value)
 	      ? 'Really? You still use AOL for your email?'
-	      : undefined
+	      : undefined;
     return (<React.Fragment>
 	<form onSubmit={this.props.handleSubmit}>
 	    <fieldset>
@@ -107,8 +110,8 @@ class MyReduxForm extends Component {
 		{JSON.stringify(this.props.customRadioField3)}
 		<Field name="customRadioField3"
 		       component={CustomRadioField3}
-		       onChange={this.onCustomField3Change}/>
-    
+		       onChange={this.onCustomField3Change}
+		       />
 	    </fieldset>
 	    <fieldset>
 		<label className="label">Validated Field4:</label>
@@ -130,7 +133,16 @@ export const MyReduxFormConnected = reduxForm({
   initialValues: {
     field1: "field1value",
     customField2: "customField2value",
-    customRadioField3: "radio-val2"
+    customRadioField3: "radio-val2",
+    validatedField4: "example@aol.com"
+  },
+  validate: (values) => {
+    const errors = {};
+    if (values.customRadioField3 !== "radio-val2" && values.customRadioField3 !== "radio-val3") {
+      errors.customRadioField3 = "Please use radio-val3 or radio-val2";
+    }
+    console.log("MyReduxFormConnected.validate: " + JSON.stringify(values));
+    return errors;
   }
 })(MyReduxForm);
 
