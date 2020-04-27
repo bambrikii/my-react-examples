@@ -24,6 +24,8 @@ import HorizontalNavigation from "../navigation/HorizontalNavigation.jsx";
 
 import { Provider } from 'react-redux';
 
+import MyAgGrid from "../MyAgGrid/MyAgGrid.jsx";
+
 class App extends Component {
   render() {
     return (
@@ -32,7 +34,7 @@ class App extends Component {
 		    <HorizontalNavigation />
 		    <Row>
 			<Col>
-			<Tabs defaultActiveKey="redux-form" id="uncontrolled-tab-example">
+			<Tabs defaultActiveKey="my-ag-grid" id="uncontrolled-tab-example">
 			    <Tab eventKey="logo" title="Logo">
 				<div className="logo" >Logo</div>
 			    </Tab>
@@ -64,6 +66,9 @@ class App extends Component {
 						+ JSON.stringify(values));
 								    }}/>
 				</Provider>
+			    </Tab>
+			    <Tab eventKey="my-ag-grid" title="AgGrid">
+				<MyAgGrid />
 			    </Tab>
 			</Tabs>
 			</Col>
