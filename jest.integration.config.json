@@ -1,0 +1,12 @@
+{
+  "transform": {
+    "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest"
+  },
+  "testFileExtensions": [
+    "test.js"
+  ],
+  "moduleFileExtensions": [
+    "js"
+  ],
+  "testDirectoryName": "__integration_tests__"
+}
