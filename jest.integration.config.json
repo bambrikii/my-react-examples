@@ -3,10 +3,12 @@
     "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest"
   },
   "testFileExtensions": [
-    "test.js"
+    "spec.js",
+    "spec.jsx"
   ],
   "moduleFileExtensions": [
-    "js"
+    "js",
+    "jsx"
   ],
   "testDirectoryName": "__integration_tests__"
 }

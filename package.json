@@ -25,6 +25,8 @@
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.2",
     "csv-loader": "^3.0.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "expect": "^25.4.0",
     "express": "^4.17.1",
     "file-loader": "^6.0.0",
@@ -34,6 +36,7 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "less-plugin-clean-css": "^1.5.1",
+    "react-test-renderer": "^16.13.1",
     "style-loader": "^1.1.4",
     "webpack": "^4.19.1",
     "webpack-assets-manifest": "^3.0.2",
@@ -58,10 +61,12 @@
       "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest"
     },
     "testFileExtensions": [
-      "test.js"
+      "spec.js",
+      "spec.jsx"
     ],
     "moduleFileExtensions": [
-      "js"
+      "js",
+      "jsx"
     ]
   }
 }
