@@ -1,6 +1,13 @@
 {
   "name": "my-react",
   "dependencies": {
+    "@ag-grid-community/client-side-row-model": "^23.1.0",
+    "@ag-grid-community/react": "^23.1.0",
+    "@ag-grid-enterprise/column-tool-panel": "^23.1.0",
+    "@ag-grid-enterprise/filter-tool-panel": "^23.1.0",
+    "@ag-grid-enterprise/menu": "^23.1.0",
+    "@ag-grid-enterprise/row-grouping": "^23.1.0",
+    "@ag-grid-enterprise/set-filter": "^23.1.0",
     "ag-grid-community": "^23.0.2",
     "ag-grid-react": "^23.0.3",
     "babel-plugin-transform-styles": "0.0.3",
@@ -53,20 +60,7 @@
     "build:prod": "webpack --mode production",
     "build:dev": "webpack --mode development --config webpack.config.js",
     "server": "node dev/dev-server.js",
-    "test": "jest",
+    "test": "jest --config jest.config.json",
     "testi": "webpack --config=webpack.config.js && jest --config=jest.integration.config.json"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest"
-    },
-    "testFileExtensions": [
-      "spec.js",
-      "spec.jsx"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ]
   }
 }
